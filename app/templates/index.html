@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Investment Decision Center</title>
+</head>
+<body class="bg-slate-100 min-h-screen p-6">
+  <div class="max-w-5xl mx-auto space-y-6">
+    <h1 class="text-2xl font-bold">Investment Decision Center</h1>
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded p-4">現價<br><span class="text-xl font-semibold">{{ summary.current_price }}</span></div>
+      <div class="bg-white rounded p-4">60日高點<br><span class="text-xl font-semibold">{{ summary.high_60d }}</span></div>
+      <div class="bg-white rounded p-4">MA60<br><span class="text-xl font-semibold">{{ summary.ma60 }}</span></div>
+      <div class="bg-white rounded p-4">回檔 %<br><span class="text-xl font-semibold">{{ summary.drawdown_pct }}%</span></div>
+    </section>
+    <section class="bg-white rounded p-4">
+      <h2 class="font-semibold mb-2">建議動作</h2>
+      <p class="text-lg">{{ summary.recommended_action }}</p>
+      <p class="text-slate-600">{{ summary.reason }}</p>
+    </section>
+  </div>
+</body>
+</html>
