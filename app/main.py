@@ -1,13 +1,35 @@
+import os
+
 from fastapi import FastAPI
+from fastapi import Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
 
 from app.models import MarkExecutedRequest
 from app.services.decision_service import get_decision_summary
 
 app = FastAPI(title='Investment Decision Center')
 templates = Jinja2Templates(directory='app/templates')
+
+REQUIRED_ENV_VARS = ['SUPABASE_URL', 'SUPABASE_KEY', 'FINMIND_TOKEN']
+
+
+def get_missing_env_vars() -> list[str]:
+    return [name for name in REQUIRED_ENV_VARS if not os.getenv(name)]
+
+
+@app.get('/health')
+def health_check():
+    missing = get_missing_env_vars()
+    if missing:
+        return {
+            'status': 'error',
+            'service': 'investment-decision-center',
+            'error': 'Missing required environment variables.',
+            'missing': missing,
+        }
+
+    return {'status': 'ok', 'service': 'investment-decision-center'}
 
 
 @app.get('/decision/{symbol}')
